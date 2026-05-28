@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Common Operational Picture"
+version = "1.0.0"
+id = "artifacts/cop-dashboard"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22919
+
+[services.development]
+run = "pnpm --filter @workspace/cop-dashboard run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cop-dashboard", "run", "build" ]
+publicDir = "artifacts/cop-dashboard/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22919"
+BASE_PATH = "/"
